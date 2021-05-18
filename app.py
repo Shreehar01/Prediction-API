@@ -1,5 +1,6 @@
 import numpy as np
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 import pickle
 
 '''import flask
@@ -8,21 +9,25 @@ import json
 '''
 
 app = Flask(__name__)
+CORS(app)
 model = pickle.load(open('model.pkl', 'rb'))
+
 
 @app.route('/')
 def home():
     #return render_template('index.html')
-    return "The server is up and running in the web you are seeing."
-    
+    return jsonify({"response": "This is homepage."})
+
+
+
 @app.route('/predict', methods=['POST'])
 def predict():
     '''
     For rendering results on HTML GUI
     '''
-    print("Printing request")
-    print(request.json)
-    return 200, "Response"
+    print("Post initiated")
+    return jsonify({"response": "This is prediction page."}), 200
+   
     '''
     input_features = [float(x) for x in request.form.values()]
     final_features = [np.array(input_features)]
@@ -35,7 +40,6 @@ def predict():
         text = "The patient has high chance of having heart attack."
     return jsonify(text)
     '''
-    
     '''
     response = jsonify({
 				"statusCode": 200,
