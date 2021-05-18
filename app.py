@@ -20,12 +20,14 @@ def home():
 
 
 
-@app.route('/predict', methods=['GET', 'POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
     '''
     For rendering results on HTML GUI
     '''
     print("Post initiated")
+    data = request.get_json()
+    print(data['title'])
     return jsonify({"response": "This is prediction page."}), 200
    
     '''
