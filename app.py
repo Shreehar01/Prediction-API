@@ -13,7 +13,7 @@ model = pickle.load(open('model.pkl', 'rb'))
 @app.route('/')
 def home():
     #return render_template('index.html')
-    return "The server is up and running."
+    return "The server is up and running in the web."
     
 @app.route('/predict', methods=['POST'])
 def predict():
