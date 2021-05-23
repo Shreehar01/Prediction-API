@@ -10,7 +10,7 @@ import json
 
 app = Flask(__name__)
 CORS(app)
-model = pickle.load(open('model.pkl', 'rb'))
+model_heart = pickle.load(open('model.pkl', 'rb'))
 
 
 @app.route('/')
@@ -20,72 +20,48 @@ def home():
 
 
 
-@app.route('/predict', methods=['POST'])
-def predict():
-    '''
-    For rendering results on HTML GUI
-    '''
-    print("Post initiated")
+
+
+@app.route('/heart-prediction', methods=['POST'])
+def predict_finance():
+    
     data = request.get_json()
-    print(data['title'])
-    return jsonify({"response": "This is prediction page."}), 200
-   
-    '''
-    input_features = [float(x) for x in request.form.values()]
-    final_features = [np.array(input_features)]
-    prediction = model.predict(final_features)
-    proba = model.predict_proba(final_features)
-    output = round(prediction[0], 2)
-    if output == 0:
-        text = "The patient has low chance of having heart attack " + " with a probability of " + str(proba[0][1])
-    else:
-        text = "The patient has high chance of having heart attack."
-    return jsonify(text)
-    '''
-    '''
-    response = jsonify({
-				"statusCode": 200,
-				"status": "Prediction made",
-				"result": "The type of iris plant is: " + types[prediction[0]]
-				})
-    '''
-
-if __name__ == "__main__":
-    app.run(debug=True)
-
-
-
-    '''import numpy as np
-from flask import Flask, request, jsonify, render_template
-import pickle
-
-app = Flask(__name__)
-model = pickle.load(open('model.pkl', 'rb'))
-
-@app.route('/')
-def home():
-    return "Machine Learning API for Heart Disease Prediction."
-
-@app.route('/predict',methods=['POST'])
-def predict():
-    '''
-    #For rendering results on HTML GUI
-    '''
-    try:
-        input_features = [float(x) for x in request.form.values()]
-        final_features = [np.array(input_features)]
-        prediction = model.predict(final_features)
-        output = round(prediction[0], 2)
-        text = ""
-        if output == 0:
-            text = "The patient has low chance of having heart attack."
+    prediction_data = []
+    print(data.keys())
+    delete_list = ['createdAt', 'creator', '__v', 'update', 'prediction', 'probability']
+    for entries in delete_list:
+        try:
+            data.pop(entries)
+        except:
+            continue
+    print(data.keys())
+    for keys in data:
+        if len(data[keys]) == 0:
+            prediction_data.append(0)
+        elif keys == 'name' or keys  == "_id":
+            continue
         else:
-            text = "The patient has high chance of having heart attack."
-        result = [{"Output": text}]
-        return jsonify(result)
-    except: 
-        return "Shreehar"
+            prediction_data.append(float(data[keys]))
+    
+    final_features = [np.array(prediction_data)]   
+    
+    prediction_val = model_heart.predict(final_features)
+    probability = model_heart.predict_proba(final_features)[0][1]
+    output = round(prediction_val[0], 2)
+    print("This is the output" + str(output))
+    if probability < 0.4:
+        text = "Low Chance"
+    elif probability >= 0.4 and probability < 0.6:
+        text = "Moderate Chance"
+    else:
+        text = "High Chance"
+    data['probability'] = probability
+    data['prediction'] = text
+    print(text)
+    return jsonify(data)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
-    '''
+
+
