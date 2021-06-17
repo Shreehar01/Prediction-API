@@ -163,7 +163,8 @@ def predict_credit():
     data['prediction'] = text
     data['probability'] = 0.4
     data['prediction'] = "High Chance"
-    return jsonify(data) 
+    return jsonify(data)
+    
 '''
 
 # Loan Approval
