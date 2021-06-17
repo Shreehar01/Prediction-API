@@ -11,7 +11,7 @@ CORS(app)
 model_heart = pickle.load(open('heart-attack-model.pkl', 'rb'))
 model_diabetes = pickle.load(open('diabetes-model.pkl', 'rb'))
 model_stroke = pickle.load(open('stroke-model.pkl', 'rb'))
-model_credit = pickle.load(open('credit-model.pkl', 'rb'))
+#model_credit = pickle.load(open('credit-model.pkl', 'rb'))
 model_loan = pickle.load(open('loan-model.pkl', 'rb'))
 model_insurance = pickle.load(open('insurance-model.pkl', 'rb'))
 
