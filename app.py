@@ -128,7 +128,7 @@ def predict_diabetes():
     data['prediction'] = text
     return jsonify(data)
 
-
+'''
 # Credit Card Approval Prediction
 @app.route('/credit-prediction', methods=['POST'])
 def predict_credit():    
@@ -166,7 +166,7 @@ def predict_credit():
     data['probability'] = 0.4
     data['prediction'] = "High Chance"
     return jsonify(data)
-
+'''
 
 # Loan Approval
 @app.route('/loan-prediction', methods=['POST'])
