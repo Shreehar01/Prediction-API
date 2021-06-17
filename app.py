@@ -150,7 +150,6 @@ def predict_credit():
         else:
             prediction_data.append(float(data[keys]))
     final_features = [np.array(prediction_data)]   
-    '''
     print('Reached 153')
     prediction_val = model_credit.predict(final_features)
     print("Reached 154") 
@@ -162,10 +161,9 @@ def predict_credit():
         text = "High Chance"
     data['probability'] = probability
     data['prediction'] = text
-    '''
     data['probability'] = 0.4
     data['prediction'] = "High Chance"
-    return jsonify(data)
+    return jsonify(data) 
 '''
 
 # Loan Approval
